@@ -35,7 +35,7 @@
         data: { value: "unknown" },
         mounted() {
             // var self = this;
-            window.exampleSocket = new WebSocket(`wss://${document.location.host}/admin`, "protocolOne");
+            window.exampleSocket = new WebSocket(`ws://${document.location.host}/admin`, "protocolOne");
             window.exampleSocket.onopen = (event) => {
                 //window.exampleSocket.send("Here's some text that the server is urgently awaiting!");
                 window.exampleSocket.onmessage = (event) => {

@@ -78,7 +78,9 @@ app.ws('/arduino', function(ws, req) {
     });
     console.log('socket', req.testing);
 });
+
 const activeConnections = [];
+
 app.ws('/admin', function(ws, req) {
     activeConnections.push(ws);
     if(arduino_switch==="OFF")
