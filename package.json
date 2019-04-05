@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Server for Underwater Robotics GUI",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -13,5 +10,8 @@
     "express": "^4.16.4",
     "express-ws": "^4.0.0",
     "nodemon": "^1.18.10"
+  },
+  "engines": {
+     "node": "11.13.0"
   }
 }
