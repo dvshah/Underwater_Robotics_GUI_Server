@@ -27,20 +27,23 @@ app.ws('/arduino', function(ws, req) {
 const activeConnections = [];
 app.ws('/admin', function(ws, req) {
     activeConnections.push(ws);
-    if(arduino_switch=="OFF")
+    if(arduino_switch==="OFF")
       ws.send("ON");
-    else if(arduino_switch=="ON")
+    else if(arduino_switch==="ON")
       ws.send("OFF");
     ws.on('message', function(msg) {
       arduino_switch = msg;
-      //arduinoSocket.send(msg);
+      if(arduinoSocket)
+      {
+        arduinoSocket.send(msg);
+      }
       console.log(arduino_switch);
       console.log(`sending to ${activeConnections.length} connections`);
       activeConnections.forEach((socket)=>{
         try{
-            if(arduino_switch=="OFF")
+            if(arduino_switch==="OFF")
             socket.send("ON");
-            else if(arduino_switch=="ON")
+            else if(arduino_switch==="ON")
             socket.send("OFF");
         }catch(e){}
       });
