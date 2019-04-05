@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>GUI FOR ROBOT</title>
     <style>
         html {
             font-family: Helvetica;
@@ -13,7 +13,6 @@
             margin: 0px auto;
             text-align: center;
         }
-
         .button {
             background-color: #195B6A;
             border: none;
@@ -26,15 +25,14 @@
 
 <body>
     <h1>
-        ESP8266 Web Server!
+        CLICK THE BUTTON TO SWITCH THE ROBOT ON/OFF
     </h1>
-    <p><button id="app" class="button" v-on:click="toggle">{{value}}</button></p>
+    <p><button id="app" class="button" v-on:click="toggle">SWITCH {{value}}</button></p>
 </body>
 <script>
-
     var myObject = new Vue({
         el: '#app',
-        data: { value: "Fuckup" },
+        data: { value: "unknown" },
         mounted() {
             var self = this;
             window.exampleSocket = new WebSocket(`ws://${document.location.host}/admin`, "protocolOne");
@@ -48,15 +46,15 @@
         },
         methods: {
             toggle: function (event) {
-                if (this.value == "false")
+                if (this.value == "OFF")
                 {
-                    this.value = "true";
-                    window.exampleSocket.send(this.value);
+                    this.value = "ON";
+                    window.exampleSocket.send("OFF");
                 }
                 else
                 {
-                    this.value = "false";
-                    window.exampleSocket.send(this.value);
+                    this.value = "OFF";
+                    window.exampleSocket.send("ON");
                 }
     }
         }
