@@ -3,7 +3,7 @@ var http = require('http');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
 var qs = require('querystring');
-
+var path = require('path');
 var app = express();
 var expressWs = require('express-ws')(app);
 
@@ -12,7 +12,9 @@ let arduinoSocket;
 
 app.get('/', function(req, res){
     //arduinoSocket.send(arduino_switch);
-    res.sendfile('./views/home.html');
+    res.sendFile('views/home.html' , { root : __dirname});
+    //res.sendFile('../views/home.html', {root: __dirname});
+    //res.sendFile('./views/home.html');
 })
 
 app.ws('/arduino', function(ws, req) {
@@ -31,7 +33,7 @@ app.ws('/admin', function(ws, req) {
       ws.send("OFF");
     ws.on('message', function(msg) {
       arduino_switch = msg;
-      arduinoSocket.send(msg);
+      //arduinoSocket.send(msg);
       console.log(arduino_switch);
       console.log(`sending to ${activeConnections.length} connections`);
       activeConnections.forEach((socket)=>{
