@@ -49,22 +49,24 @@
                 if (this.value == "OFF")
                 {
                     this.value = "ON";
-                    window.exampleSocket.send("OFF");
                     if(!window.exampleSocket)
                     {
                         console.log("websocket closed!");
                         window.location.reload();
                     }
+                    window.exampleSocket.send("OFF");
+
                 }
                 else
                 {
                     this.value = "OFF";
-                    window.exampleSocket.send("ON");
                     if(!window.exampleSocket)
                     {
                         console.log("websocket closed!");
                         window.location.reload();
                     }
+                    window.exampleSocket.send("ON");
+
                 }
     }
         }
