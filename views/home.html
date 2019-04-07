@@ -52,6 +52,7 @@
                     if(window.exampleSocket.readyState === window.exampleSocket.CLOSED)
                     {
                         console.log("Closed!");
+                        window.location.reload();
                     }
                     window.exampleSocket.send("OFF");
 
@@ -62,6 +63,7 @@
                     if(window.exampleSocket.readyState === window.exampleSocket.CLOSED)
                     {
                         console.log("Closed!");
+                        window.location.reload();
                     }
                     window.exampleSocket.send("ON");
 
