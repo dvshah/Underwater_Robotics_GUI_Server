@@ -49,10 +49,9 @@
                 if (this.value == "OFF")
                 {
                     this.value = "ON";
-                    if(!window.exampleSocket)
+                    if(window.exampleSocket.readyState === window.exampleSocket.CLOSED)
                     {
-                        console.log("websocket closed!");
-                        window.location.reload();
+                        console.log("Closed!");
                     }
                     window.exampleSocket.send("OFF");
 
@@ -60,10 +59,9 @@
                 else
                 {
                     this.value = "OFF";
-                    if(!window.exampleSocket)
+                    if(window.exampleSocket.readyState === window.exampleSocket.CLOSED)
                     {
-                        console.log("websocket closed!");
-                        window.location.reload();
+                        console.log("Closed!");
                     }
                     window.exampleSocket.send("ON");
 
