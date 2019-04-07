@@ -42,7 +42,13 @@
                     console.log(event.data);
                     this.value = event.data;
                 }
+                
             };
+            if(window.exampleSocket.readyState === window.exampleSocket.CLOSED)
+            {
+                console.log("Closed!");
+                window.location.reload();
+            }
         },
         methods: {
             toggle: function (event) {

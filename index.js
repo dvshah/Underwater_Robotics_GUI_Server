@@ -71,6 +71,8 @@ app.post('/login',urlencodedParser,function(req, res){
   }
 })
 
+const activeConnections = []; 
+
 app.ws('/arduino', function(ws, req) {
     arduinoSocket = ws;
     ws.on('message', function(msg) {
@@ -79,7 +81,7 @@ app.ws('/arduino', function(ws, req) {
     console.log('socket', req.testing);
 });
 
-const activeConnections = [];
+//const activeConnections = [];
 
 app.ws('/admin', function(ws, req) {
     activeConnections.push(ws);
