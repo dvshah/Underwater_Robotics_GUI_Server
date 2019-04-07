@@ -44,11 +44,15 @@
                 }
                 console.log("hi!!");
             };
-            console.log("yo!");
-            if(window.exampleSocket.readyState === window.exampleSocket.CLOSED)
+            //console.log("yo!");
+            while(1)
             {
-                console.log("Closed!");
-                window.location.reload();
+                console.log("yo!");
+                if(window.exampleSocket.readyState === window.exampleSocket.CLOSED)
+                {
+                    console.log("Closed!");
+                    window.location.reload();
+                }
             }
         },
         methods: {
