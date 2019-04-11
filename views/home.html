@@ -24,36 +24,74 @@
 </head>
 
 <body>
-    <h1>
-        CLICK THE BUTTON TO SWITCH THE ROBOT ON/OFF
-    </h1>
-    <p><button id="app" class="button" v-on:click="toggle">SWITCH {{value}}</button></p>
+    <div id="app">
+        <h1>
+            CLICK THE BUTTON TO SWITCH THE ROBOT ON/OFF
+        </h1>
+        <p><button class="button" v-on:click="toggle">SWITCH {{value}}</button></p>
+        <h2>Sensor data: </h2>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+            </tr>
+            <tr v-for="(sensor,index) in sensors.slice().reverse()">
+                <td>{{index}}</td>
+                <td>{{ sensor.temp }}</td>
+                <td>{{ sensor.humidity }}</td>
+            </tr>
+        </table>
+    </div>
 </body>
 <script>
+    Vue.config.devtools = true;
     var myObject = new Vue({
         el: '#app',
-        data: { value: "unknown" },
+        data: {
+            value: "unknown",
+            temperature: "nan",
+            sensors: [
+                {
+                    temp: "nan",
+                    humidity: "nan"
+                },
+                {
+                    temp: "nan",
+                    humidity: "nan"
+                }
+            ]
+        },
         mounted() {
             // var self = this;
-            window.exampleSocket = new WebSocket(`wss://${document.location.host}/admin`, "protocolOne");
+            window.exampleSocket = new WebSocket(`ws://${document.location.host}/admin`, "protocolOne");
             window.exampleSocket.onopen = (event) => {
                 //window.exampleSocket.send("Here's some text that the server is urgently awaiting!");
                 window.exampleSocket.onmessage = (event) => {
                     console.log(event.data);
-                    this.value = event.data;
+                    if(event.data==="ON" || event.data==="OFF")
+                        this.value = event.data;
+                    else
+                    {
+                        if(event.data[0]==="T")
+                        {
+                            this.temperature = event.data.slice(2);
+                        }
+                        else if(event.data[0]==="H")
+                        {
+                            this.sensors.push({
+                                temp: this.temperature,
+                                humidity: event.data.slice(2)
+                            })
+                            if(sensors.length > 10)
+                            {
+                                sensor.slice(1);
+                            }
+                        }
+                    }
                 }
                 console.log("hi!!");
             };
-            //console.log("yo!");
-            while(1)
-            {
-                //console.log("yo!");
-                if(window.exampleSocket.readyState === window.exampleSocket.CLOSED)
-                {
-                    console.log("Closed!");
-                    window.location.reload();
-                }
-            }
         },
         methods: {
             toggle: function (event) {
