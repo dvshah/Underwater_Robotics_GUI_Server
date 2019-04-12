@@ -116,6 +116,18 @@ app.ws('/admin', function(ws, req) {
     });
     console.log('socket', req.testing);
 });
+// let i = 0;
+// var interval = setInterval(function() {
+//   activeConnections.forEach((socket)=>{
+//     try{
+//         socket.send(`T ${i}`);
+//         socket.send(`H ${i}`);
+//     }catch(e){}
+//   });
+//   i++;
+//   if(i>20)
+//     i=0;
+// }, 2000);
    
 var port = process.env.PORT || 8080;
 app.listen(port);

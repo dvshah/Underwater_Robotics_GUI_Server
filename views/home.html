@@ -63,12 +63,12 @@
             ]
         },
         mounted() {
-            // var self = this;
+            //var self = this;
             window.exampleSocket = new WebSocket(`wss://${document.location.host}/admin`, "protocolOne");
             window.exampleSocket.onopen = (event) => {
                 //window.exampleSocket.send("Here's some text that the server is urgently awaiting!");
                 window.exampleSocket.onmessage = (event) => {
-                    console.log(event.data);
+                    //console.log(event.data);
                     if(event.data==="ON" || event.data==="OFF")
                         this.value = event.data;
                     else
@@ -76,16 +76,20 @@
                         if(event.data[0]==="T")
                         {
                             this.temperature = event.data.slice(2);
+
                         }
                         else if(event.data[0]==="H")
                         {
+                            //console.log(this.sensors);
                             this.sensors.push({
                                 temp: this.temperature,
                                 humidity: event.data.slice(2)
                             })
-                            if(sensors.length > 10)
+                            //console.log(this.sensors);
+                            if(this.sensors.length > 10)
                             {
-                                sensor.slice(1);
+                                this.sensors.splice(0,1);
+                                console.log(this.sensors.length);
                             }
                         }
                     }
