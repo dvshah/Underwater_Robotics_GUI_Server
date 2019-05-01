@@ -129,5 +129,5 @@ app.ws('/admin', function(ws, req) {
 //     i=0;
 // }, 2000);
    
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 8080;
 app.listen(port);
