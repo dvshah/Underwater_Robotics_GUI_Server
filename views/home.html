@@ -136,6 +136,8 @@
     }
         }
     })
+
+
 var ctx = document.getElementById('tempChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
@@ -188,6 +190,8 @@ function addData(chart, label, tempdata, humiditydata, len) {
     chart.data.datasets[1].data.push(humiditydata);
     chart.update();
 }
+
+
 function secondsnow() {
     var d = new Date();
     return d.getSeconds();
