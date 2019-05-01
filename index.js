@@ -47,8 +47,8 @@ app.get('/', sessionCheckerHome, function(req, res){
     //res.sendFile('./views/home.html');
 })
 
-let username = "devansh";
-let password = "b871e4d8aaeaac3cea157f22fa9721ad4f3650b9d37fda912780b9da550c4f0e";
+let username = "admin";
+let password = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8";
 
 app.get('/login', sessionChecker, function(req, res){
   res.sendFile('views/login.html', {root : __dirname});
@@ -57,7 +57,7 @@ app.get('/login', sessionChecker, function(req, res){
 app.post('/login',urlencodedParser,function(req, res){
   let usr = req.body.name;
   let passwd = req.body.password;
-  console.log(passwd);
+  //console.log(passwd);
   passwd = crypto.createHash('sha256').update(passwd).digest('hex');
   console.log(passwd);
   if(usr===username && passwd==password)
@@ -129,5 +129,5 @@ app.ws('/admin', function(ws, req) {
 //     i=0;
 // }, 2000);
    
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 80;
 app.listen(port);
