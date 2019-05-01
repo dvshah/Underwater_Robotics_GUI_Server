@@ -99,7 +99,7 @@
         },
         methods: {
             toggle: function (event) {
-                if (this.value == "OFF")
+                if (this.value === "OFF")
                 {
                     this.value = "ON";
                     if(window.exampleSocket.readyState === window.exampleSocket.CLOSED)

@@ -77,7 +77,7 @@ app.ws('/arduino', function(ws, req) {
     arduinoSocket = ws;
     ws.on('message', function(msg) {
       console.log(msg);
-      if(msg[0]==='T' || msg[0]=='H')
+      if(msg[0]==='T' || msg[0]==='H')
       {
         activeConnections.forEach((socket)=>{
           try{
