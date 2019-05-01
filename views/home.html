@@ -24,7 +24,10 @@
             color: white;
             padding: 16px 40px;
         }
+
+
     </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
 </head>
@@ -36,22 +39,24 @@
         </h1>
         <p><button class="button" v-on:click="toggle">SWITCH {{value}}</button></p>
         <h2>Sensor data: </h2>
-        <div>
-            <canvas id="tempChart" width="100" height="40"></canvas>
-        </div>
-        <div style="text-align: center;">
-            <table style="display:inline-block;">
-                <tr>
-                    <th>Id</th>
-                    <th>Temperature</th>
-                    <th>Humidity</th>
-                </tr>
-                <tr v-for="(sensor,index) in sensors.slice().reverse()">
-                    <td>{{index}}</td>
-                    <td>{{ sensor.temp }}</td>
-                    <td>{{ sensor.humidity }}</td>
-                </tr>
-            </table>
+        <div class="row">
+            <div class="col-lg-9">
+                <canvas id="tempChart" width="100" height="40"></canvas>
+            </div>
+            <div class="col-lg-3">
+                <table class="table table-condensed table-striped">
+                    <tr>
+                        <th>Time</th>
+                        <th>Temperature</th>
+                        <th>Humidity</th>
+                    </tr>
+                    <tr v-for="(sensor) in sensors.slice().reverse()">
+                        <td>{{ sensor.time }}</td>
+                        <td>{{ sensor.temp }}</td>
+                        <td>{{ sensor.humidity }}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </body>
@@ -60,16 +65,14 @@
     var myObject = new Vue({
         el: '#app',
         data: {
+            time: "",
             value: "unknown",
             temperature: "nan",
             sensors: [
                 {
-                    temp: "nan",
-                    humidity: "nan"
-                },
-                {
-                    temp: "nan",
-                    humidity: "nan"
+                    time: "",
+                    temp: "",
+                    humidity: ""
                 }
             ]
         },
@@ -88,14 +91,17 @@
                         if(event.data[0]==="T")
                         {
                             this.temperature = event.data.slice(2);
+
                         }
                         else if(event.data[0]==="H")
                         {
                             //console.log(this.sensors);
                             this.sensors.push({
+                                time: timenow(),
                                 temp: this.temperature,
                                 humidity: event.data.slice(2)
                             })
+
                             addData(myChart,secondsnow(),parseFloat(this.temperature),parseFloat(this.sensors[this.sensors.length-1].humidity),this.sensors.length);
                             //console.log(this.sensors);
                             if(this.sensors.length > 10)
@@ -121,6 +127,7 @@
                     }
                     console.log("OFF");
                     window.exampleSocket.send("OFF");
+
                 }
                 else
                 {
@@ -132,6 +139,7 @@
                     }
                     console.log("ON");
                     window.exampleSocket.send("ON");
+
                 }
     }
         }
@@ -142,7 +150,7 @@ var ctx = document.getElementById('tempChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: [1,2,3,4,5,6,7,8,9,10],
+        labels: [],
         datasets: [{
             label: 'Temperature',
             data: [],
@@ -156,8 +164,8 @@ var myChart = new Chart(ctx, {
         {
             label: 'Humidity',
             data: [],
-            backgroundColor: 'rgba(255, 255, 0,0.5)',
-            borderColor: 'rgba(255, 255, 0, 0.5)',
+            backgroundColor: 'rgba(0, 0, 255,0.5)',
+            borderColor: 'rgba(0, 0, 255, 0.5)',
             borderWidth: 2,
             fill: false,
             borderDash: [5,5],
@@ -175,6 +183,7 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
 function addData(chart, label, tempdata, humiditydata, len) {
     if(len > 10) {
        chart.data.labels.splice(0, 1); // remove first label
@@ -196,6 +205,13 @@ function secondsnow() {
     var d = new Date();
     return d.getSeconds();
 }
+
+function timenow() {
+  var d = new Date();
+  var n = d.toLocaleTimeString();
+  return n;
+}
+
 </script>
 
 </html>
